@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>74A47763-6977-409F-BB4C-394C4F9719F1</string>
+	<key>IDESourceControlProjectName</key>
+	<string>AmazingAdvanceUITest</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B48392ACAD0607FBC547542B6F3D5820F26A7768</key>
+		<string>https://github.com/cwhstcnn/AmazingAdvanceUI.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Example/AmazingAdvanceUITest/AmazingAdvanceUITest.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B48392ACAD0607FBC547542B6F3D5820F26A7768</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/cwhstcnn/AmazingAdvanceUI.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B48392ACAD0607FBC547542B6F3D5820F26A7768</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B48392ACAD0607FBC547542B6F3D5820F26A7768</string>
+			<key>IDESourceControlWCCName</key>
+			<string>AmazingAdvanceUI</string>
+		</dict>
+	</array>
+</dict>
+</plist>
