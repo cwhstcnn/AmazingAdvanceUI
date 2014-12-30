@@ -66,14 +66,18 @@
                 [self.animationContextDelegate transitionDidCompleted:completed];
             }
             
-
-                modalView.alpha=1.0f;
+            POPSpringAnimation *springAlpha=[POPSpringAnimation animationWithPropertyNamed:kPOPViewAlpha];
+            springAlpha.toValue=@(1.0f);
+            springAlpha.completionBlock=^(POPAnimation *animatino, BOOL completed){
                 
                 [dimmingView removeFromSuperview];
                 [masterSnap removeFromSuperview];
+                
+                
+                [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+            };
+            [modalView pop_addAnimation:springAlpha forKey:@"alpha"];
 
-            
-            [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
         };
         [masterSnap pop_addAnimation:springToRect forKey:@"springToRect"];
     }
@@ -186,8 +190,15 @@
                     translate.toValue=[NSValue valueWithCGPoint:position];
                     translate.velocity=[NSValue valueWithCGPoint:velocity];
                     translate.completionBlock=^(POPAnimation *animation, BOOL completed){
-                        [self.modalCropSnap removeFromSuperview];
-                        [dimmingView removeFromSuperview];
+                        
+                            //make remove more natural
+                        POPSpringAnimation *dimmingSpringAlpha=[POPSpringAnimation animationWithPropertyNamed:kPOPViewAlpha];
+                        dimmingSpringAlpha.toValue=@(0);
+                        dimmingSpringAlpha.completionBlock=^(POPAnimation *animation, BOOL completed){
+                            [self.modalCropSnap removeFromSuperview];
+                            [dimmingView removeFromSuperview];
+                        };
+                        [dimmingView pop_addAnimation:dimmingSpringAlpha forKey:@"dimmingAlpha"];
 
                         [self.transitionContext completeTransition:NO];
                     };
