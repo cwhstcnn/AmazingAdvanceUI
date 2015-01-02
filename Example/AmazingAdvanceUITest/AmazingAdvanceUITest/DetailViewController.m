@@ -22,6 +22,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.view.frame=CGRectMake(0, 0, 768, 1024);
+    
     UIView *dimmingView=[[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     dimmingView.backgroundColor=[UIColor colorWithWhite:0 alpha:0.5];
     [self.view addSubview:dimmingView];
@@ -45,7 +47,12 @@
 
 - (void)tap:(UITapGestureRecognizer *)gesture
 {
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    
+    self.view.userInteractionEnabled=NO;
+    [self dismissViewControllerAnimated:YES completion:^{
+        self.view.userInteractionEnabled=YES;
+    }];
 }
 
 - (UIColor *)randomColor

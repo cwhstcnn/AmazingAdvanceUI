@@ -12,4 +12,6 @@
 #import "POPContextAnimationController.h"
 #import "POPRectToRectContextAnimationController.h"
 
+#import "POPInteractiveAnimatedContextAnimationController.h"
+
 #endif

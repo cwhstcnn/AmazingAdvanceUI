@@ -35,6 +35,7 @@
 		E53701251A526A9D0032BB68 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E53701241A526A9D0032BB68 /* CollectionViewCell.m */; };
 		E53701281A526B4D0032BB68 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E53701271A526B4D0032BB68 /* DetailViewController.m */; };
 		E537012C1A526CA30032BB68 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E537012B1A526CA30032BB68 /* DetailViewController.xib */; };
+		E5EA89651A56887A000A0902 /* POPInteractiveAnimatedContextAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EA89641A56887A000A0902 /* POPInteractiveAnimatedContextAnimationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +163,8 @@
 		E53701261A526B4D0032BB68 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		E53701271A526B4D0032BB68 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		E537012B1A526CA30032BB68 /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		E5EA89631A56887A000A0902 /* POPInteractiveAnimatedContextAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POPInteractiveAnimatedContextAnimationController.h; sourceTree = "<group>"; };
+		E5EA89641A56887A000A0902 /* POPInteractiveAnimatedContextAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POPInteractiveAnimatedContextAnimationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,6 +290,8 @@
 				E53700E11A525E080032BB68 /* POPContextAnimationController.m */,
 				E53700E21A525E080032BB68 /* POPRectToRectContextAnimationController.h */,
 				E53700E31A525E080032BB68 /* POPRectToRectContextAnimationController.m */,
+				E5EA89631A56887A000A0902 /* POPInteractiveAnimatedContextAnimationController.h */,
+				E5EA89641A56887A000A0902 /* POPInteractiveAnimatedContextAnimationController.m */,
 			);
 			name = AmazingPOPVCTransition;
 			path = ../../../AmazingPOPVCTransition;
@@ -486,6 +491,7 @@
 				E537008E1A525D810032BB68 /* ViewController.m in Sources */,
 				E53700E51A525E080032BB68 /* GalleryLayout.m in Sources */,
 				E537008B1A525D810032BB68 /* AppDelegate.m in Sources */,
+				E5EA89651A56887A000A0902 /* POPInteractiveAnimatedContextAnimationController.m in Sources */,
 				E53700EA1A525E080032BB68 /* POPRectToRectContextAnimationController.m in Sources */,
 				E53700881A525D810032BB68 /* main.m in Sources */,
 				E53701251A526A9D0032BB68 /* CollectionViewCell.m in Sources */,

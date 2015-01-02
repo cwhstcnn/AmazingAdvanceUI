@@ -13,11 +13,22 @@
 
 #define VCCOLLECTIONVIEWCELLID @"cell"
 
-@interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,POPContextAnimationControllerDataSource,POPContextAnimationControllerDelegate,UINavigationControllerDelegate>
+typedef NS_OPTIONS(NSUInteger, AnimationControllerType)
+{
+    AnimationControllerUnknown,
+    RectToRect,
+    InteractiveRectToRect
+};
+
+@interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,POPContextAnimationControllerDataSource,POPContextAnimationControllerDelegate,UINavigationControllerDelegate,POPInteractiveAnimatedContextAnimationControllerDelegate,POPInteractiveAnimatedContextAnimationControllerrDataSource,UIViewControllerTransitioningDelegate>
 
 @property UICollectionView *collectionView;
 
 @property POPRectToRectContextAnimationController *rectToRectAnimationController;
+
+@property POPInteractiveAnimatedContextAnimationController *interactiveAnimatedAnimationController;
+
+@property AnimationControllerType animationControllerType;
 
 @end
 
@@ -30,29 +41,8 @@
     self.navigationController.delegate=self;
     
     [self addSubCollectionView];
-}
-
-#pragma mark - Navigation Delegate
-
-- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
-{
     
-    if (operation == UINavigationControllerOperationPush) {
-        self.rectToRectAnimationController.reverse=NO;
-    }
-    else {
-        self.rectToRectAnimationController.reverse=YES;
-    }
-    
-    return self.rectToRectAnimationController;
-    
-}
-
-- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController
-{
-    
-    return self.rectToRectAnimationController.interactionInProgress ? self.rectToRectAnimationController : nil;
-    return nil;
+    self.animationControllerType=InteractiveRectToRect;
 }
 
 #pragma mark - Context Animation DataSource
@@ -152,14 +142,209 @@
     DetailViewController *detailVC=[[DetailViewController alloc] init];
     detailVC.modalPresentationStyle=UIModalPresentationFullScreen;
     
-    POPRectToRectContextAnimationController *rectToRectContextAnimationController=[[POPRectToRectContextAnimationController alloc] init];
-    rectToRectContextAnimationController.animationContextDataSource=self;
-    [rectToRectContextAnimationController wireToView:detailVC.view viewController:detailVC];
-    rectToRectContextAnimationController.animationContextDelegate=self;
+    switch (self.animationControllerType) {
+        case RectToRect:
+        {
+            POPRectToRectContextAnimationController *rectToRectContextAnimationController=[[POPRectToRectContextAnimationController alloc] init];
+            rectToRectContextAnimationController.animationContextDataSource=self;
+            [rectToRectContextAnimationController wireToView:detailVC.view viewController:detailVC];
+            rectToRectContextAnimationController.animationContextDelegate=self;
+            
+            self.rectToRectAnimationController=rectToRectContextAnimationController;
+            
+            [self.navigationController pushViewController:detailVC animated:YES];
+        }
+            break;
+        case InteractiveRectToRect:
+        {
+            POPInteractiveAnimatedContextAnimationController *interactiveAnimatedAnimationController=[[POPInteractiveAnimatedContextAnimationController alloc] init];
+            interactiveAnimatedAnimationController.animationContextDataSource=self;
+            [interactiveAnimatedAnimationController wireToModalController:detailVC];            interactiveAnimatedAnimationController.animationContextDelegate=self;
+            
+            self.interactiveAnimatedAnimationController=interactiveAnimatedAnimationController;
+            
+            detailVC.transitioningDelegate=self;
+            self.view.userInteractionEnabled=NO;
+            [self presentViewController:detailVC animated:YES completion:^{
+                self.view.userInteractionEnabled=YES;
+            }];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - Transitioning Delegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+{
+    switch (self.animationControllerType) {
+        case RectToRect:
+        {
+            self.rectToRectAnimationController.reverse=NO;
+            return self.rectToRectAnimationController;
+        }
+            break;
+        case InteractiveRectToRect:
+        {
+            self.interactiveAnimatedAnimationController.reverse=NO;
+            return self.interactiveAnimatedAnimationController;
+        }
+            break;
+            
+            
+        default:
+            break;
+    }
     
-    self.rectToRectAnimationController=rectToRectContextAnimationController;
+    return nil;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
     
-    [self.navigationController pushViewController:detailVC animated:YES];
+    switch (self.animationControllerType) {
+        case RectToRect:
+        {
+            self.rectToRectAnimationController.reverse=YES;
+            return self.rectToRectAnimationController;
+        }
+            break;
+        case InteractiveRectToRect:
+        {
+            self.interactiveAnimatedAnimationController.reverse=YES;
+            return self.interactiveAnimatedAnimationController;
+        }
+            break;
+            
+            
+        default:
+            break;
+    }
+    
+    return nil;
+}
+
+- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator
+{
+    
+    switch (self.animationControllerType) {
+        case RectToRect:
+        {
+            return self.rectToRectAnimationController.interactionInProgress ? self.rectToRectAnimationController : nil;
+        }
+            break;
+        case InteractiveRectToRect:
+        {
+            return self.interactiveAnimatedAnimationController;
+        }
+            break;
+            
+            
+        default:
+            break;
+    }
+    
+    return nil;
+}
+
+- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator
+{
+    
+    switch (self.animationControllerType) {
+        case RectToRect:
+        {
+            return self.rectToRectAnimationController.interactionInProgress ? self.rectToRectAnimationController : nil;
+        }
+            break;
+        case InteractiveRectToRect:
+        {
+            
+            return self.interactiveAnimatedAnimationController;
+        }
+            break;
+            
+            
+        default:
+            break;
+    }
+    
+    return nil;
+}
+
+#pragma mark - Navigation Delegate
+
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
+{
+    
+    if (operation == UINavigationControllerOperationPush) {
+        switch (self.animationControllerType) {
+            case RectToRect:
+            {
+                self.rectToRectAnimationController.reverse=NO;
+                return self.rectToRectAnimationController;
+            }
+                break;
+                
+            case InteractiveRectToRect:
+            {
+                self.interactiveAnimatedAnimationController.reverse=NO;
+                return self.interactiveAnimatedAnimationController;
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    else {
+        
+        switch (self.animationControllerType) {
+            case RectToRect:
+            {
+                self.rectToRectAnimationController.reverse=YES;
+                return self.rectToRectAnimationController;
+            }
+                break;
+                
+            case InteractiveRectToRect:
+            {
+                self.interactiveAnimatedAnimationController.reverse=YES;
+                return self.interactiveAnimatedAnimationController;
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    return nil;
+}
+
+- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController
+{
+    
+    switch (self.animationControllerType) {
+        case RectToRect:
+        {
+            return self.rectToRectAnimationController.interactionInProgress ? self.rectToRectAnimationController : nil;
+        }
+            break;
+            
+        case InteractiveRectToRect:
+        {
+            return self.interactiveAnimatedAnimationController;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    return nil;
 }
 
 @end
