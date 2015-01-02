@@ -1,6 +1,7 @@
 AmazingAdvanceUI
 =======
 AmazingAdvanceUI is a component for view controllers interactive transition based on some popular library : POP and Masonry. You can easily transition between any view of one controller and any view of another controller.  Get more details within the AmazingAdvanceUITest project.
+there provides a all time Interactive Animation Controller within the project ! You can interact with the view all the time just like the Paper! Check out it for the amazing interactive animated controller.
 ## POPContextAnimationController
 This is the abstract Class for controller transtition.The subclasses should implement three function:
 ####do all non-interactive transition here
@@ -31,5 +32,10 @@ In this place, you prepare for the view you need later the transitioning. And yo
 ####IMPLEMENTS
 #####- wireToView:viewController: implements
 Normally, you can assign a gesture to one view in one of view controller for the transitioning.
+###POPInteractiveAnimatedContextAnimationController
+This class implements the UIViewControllerInteractiveTransitioning delegate and control the whole transition. You can wire the modal controller's view to interrupt at any time you want. 
+####IMPLEMENTS
+Technically, this class add a gesture to the top view in transtion (container view). It makes the response properly via judging whether the gesture location hits the snapshot view or not. When it hits, trigger the gesture handling and add end animation after all.
+You should call finishTransition/cancelTransition properlly, and remove the unneeded views such as modalview/masterview/snapshotview
 ##Recap 
 Subclass the context animation controller, you can make any custom fabulous transition that you want !
